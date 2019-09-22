@@ -37,9 +37,13 @@ def creds():
     print("<--------------------------------->")
 
 
-# this function is used to convert the string input from the file to the key format needed
-# and then return the key format
 def get_key(set_key):
+    """
+    this function is used to convert the string input from the file to the key format needed
+    and then return the key format
+    :param set_key:
+    :return:
+    """
     password_provided = set_key  # This is input in the form of a string
     password = password_provided.encode()  # Convert to type bytes
     salt = b'salt_'  # CHANGE THIS - recommend using a key from os.urandom(16), must be of type bytes
@@ -55,9 +59,13 @@ def get_key(set_key):
     return key
 
 
-# this function is used to duplicate the original file that we trying to crack
-# so that we wont damage the original file
 def duplicate_file(file1):
+    """
+    this function is used to duplicate the original file that we trying to crack
+    so that we wont damage the original file
+    :param file1:
+    :return:
+    """
     # make a duplicate of an existing file
     if path.isfile(file1):
         # get the path to the file in the current directory
@@ -74,8 +82,12 @@ def duplicate_file(file1):
         shutil.copystat(src, dst)
 
 
-# this function used to get the hashing of the file so we can authenticate the source of the .bak file
 def hash_file(filename):
+    """
+    this function used to get the hashing of the file so we can authenticate the source of the .bak file
+    :param filename:
+    :return:
+    """
     h = hashes.Hash(hashes.SHA256(), backend=default_backend())
     # open file for reading in binary mode
     with open(filename, 'rb') as file:
@@ -89,9 +101,13 @@ def hash_file(filename):
     return h.finalize()
 
 
-# this function was used to create the test.encrypted file that we trying to crack
 # ---------------------------------------------------------
 def encrypt(input_file: str) -> None:
+    """
+    this function was used to create the test.encrypted file that we trying to crack
+    :param input_file:
+    :return:
+    """
     key = b'fWn9BDrXryrtcxjXhaO2BR9Oc_bS_zk1k4b6aL_0rbI='  # the key is "password"
     output_file = 'test.encrypted'
 
@@ -108,8 +124,13 @@ def encrypt(input_file: str) -> None:
 # ---------------------------------------------------------
 
 
-# this function used to try decrypt the file with a given key
 def decrypt(key_test, enc_file):
+    """
+    this function used to try decrypt the file with a given key
+    :param key_test:
+    :param enc_file:
+    :return:
+    """
     key = key_test  # Use one of the methods to get a key (it must be the same as used in encrypting)
     input_file = enc_file
     output_file = 'test.txt'
@@ -128,8 +149,12 @@ def decrypt(key_test, enc_file):
     return True
 
 
-# this function is the brutforce attempts on the file
 def start_cracking(args):
+    """
+    this function is the brutforce attempts on the file
+    :param args:
+    :return:
+    """
     with open("myhasefile.txt", "rb") as f:
         file_hase = f.read()
         this_hase = hash_file(args.enc_file + ".bak")
@@ -155,9 +180,14 @@ def start_cracking(args):
     return
 
 
-# this function is used to cleanup any temp file that we created for this attempt if we didn't found the key
-# this function wont be called
 def cleanup(args):
+    """
+    this function is used to cleanup any temp file that we created for this attempt if we didn't found the key
+    this function wont be called
+    :param args:
+    :return:
+    """
+
     remove(args.enc_file + ".bak")
     remove("myhasefile.txt")
     return
@@ -196,4 +226,5 @@ res = main()
 end = timeit.default_timer()
 print(f'timed: {end-start}')
 exit(res)
+
 
