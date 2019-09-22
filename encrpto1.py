@@ -32,9 +32,7 @@ x= """
 def creds():
     print(x)
     print("<--------------------------------->")
-    print("\nElia Peretz id: 201562436")
-    print("\nNetanel Talbi id: 302121934")
-    print("\nElena Guroraksheeva id: 326927423")
+    print("\nElia Peretz id: 999999999")
     print("\nPOC Cyber project\n")
     print("<--------------------------------->")
 
